@@ -6,6 +6,24 @@ import (
 	"strings"
 )
 
+// GetLogLevel determines the slog log level based on the provided string.
+// It returns slog.LevelInfo if the provided string does not match any known level.
+// The function is case-insensitive and supports the following levels: debug, info, warn, error.
+func GetLogLevel(level string) slog.Level {
+	switch strings.ToLower(level) {
+	case "debug":
+		return slog.LevelDebug
+	case "info":
+		return slog.LevelInfo
+	case "warn":
+		return slog.LevelWarn
+	case "error":
+		return slog.LevelError
+	}
+
+	return slog.LevelInfo
+}
+
 // SetUpLogger sets the default logger as that of the chosen format.
 // It supports JSON and Text formats, as well as a custom setup option for others.
 // The return value of the customSetup function indicates whether the setup was successful and setup should conclude.
