@@ -15,7 +15,7 @@ func GetLogLevel(level string) slog.Level {
 		return slog.LevelDebug
 	case "info":
 		return slog.LevelInfo
-	case "warn":
+	case "warn", "warning":
 		return slog.LevelWarn
 	case "error":
 		return slog.LevelError
