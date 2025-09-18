@@ -8,7 +8,7 @@ import (
 
 // GetLogLevel determines the slog log level based on the provided string.
 // It returns slog.LevelInfo if the provided string does not match any known level.
-// The function is case-insensitive and supports the following levels: debug, info, warn, error.
+// The function is case-insensitive and supports the following levels: debug, info, warn(ing), error.
 func GetLogLevel(level string) slog.Level {
 	switch strings.ToLower(level) {
 	case "debug":
@@ -25,16 +25,13 @@ func GetLogLevel(level string) slog.Level {
 }
 
 // SetUpLogger sets the default logger as that of the chosen format.
-// It supports JSON and Text formats, as well as a custom setup option for others.
-// The return value of the customSetup function indicates whether the setup was successful and setup should conclude.
-func SetUpLogger(w io.Writer, format string, lvl slog.Level, customSetup func(opts *slog.HandlerOptions) bool) {
+// It supports Google Cloud, JSON and Text formats.
+func SetUpLogger(w io.Writer, format string, lvl slog.Level) {
 	opts := &slog.HandlerOptions{Level: lvl, AddSource: true}
 
-	if customSetup != nil && customSetup(opts) {
-		return
-	}
-
 	switch strings.ToLower(format) {
+	case "gcp":
+		slog.SetDefault(slog.New(NewGCPLoggingHandler(w, opts)))
 	case "json":
 		slog.SetDefault(slog.New(slog.NewJSONHandler(w, opts)))
 	default:
