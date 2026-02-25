@@ -25,8 +25,13 @@ func NewGCPLoggingHandler(w io.Writer, opts *slog.HandlerOptions) *slog.JSONHand
 			a.Key = "severity"
 
 			level, ok := a.Value.Any().(slog.Level)
-			if ok && level == LevelCritical {
-				a.Value = slog.StringValue("CRITICAL")
+			if ok {
+				switch level { //nolint:exhaustive
+				case LevelCritical:
+					a.Value = slog.StringValue("CRITICAL")
+				case slog.LevelWarn:
+					a.Value = slog.StringValue("WARNING")
+				}
 			}
 		case "trace":
 			a.Key = "logging.googleapis.com/trace"
