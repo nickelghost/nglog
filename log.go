@@ -31,9 +31,9 @@ func GetLogLevel(level string) slog.Level {
 }
 
 // SetUpLogger sets the default logger as that of the chosen format.
-// It supports Google Cloud, JSON and Text formats.
-func SetUpLogger(w io.Writer, format string, lvl slog.Level) {
-	opts := &slog.HandlerOptions{Level: lvl, AddSource: true}
+// Supports Google Cloud, JSON and Text formats. Adds source information if addSource is true.
+func SetUpLogger(w io.Writer, format string, lvl slog.Level, addSource bool) {
+	opts := &slog.HandlerOptions{Level: lvl, AddSource: addSource}
 
 	switch strings.ToLower(format) {
 	case "gcp":
