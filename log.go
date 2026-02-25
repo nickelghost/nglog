@@ -11,8 +11,10 @@ import (
 const LevelCritical = slog.Level(12)
 
 // GetLogLevel determines the slog log level based on the provided string.
-// It returns slog.LevelInfo if the provided string does not match any known level.
-// The function is case-insensitive and supports the following levels: debug, info, warn(ing), error.
+// It is intended for configuration purposes, such as parsing a log level from an environment variable or config file.
+// It returns slog.LevelInfo if the provided string does not match any known level, making it safe to call with
+// user-provided input without error handling.
+// The function is case-insensitive and supports the following levels: debug, info, warn(ing), err(or), crit(ical).
 func GetLogLevel(level string) slog.Level {
 	switch strings.ToLower(level) {
 	case "debug":
