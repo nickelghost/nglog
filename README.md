@@ -1,6 +1,6 @@
 # nglog
 
-Common Go logging helpers built on top of the standard library's `log/slog` package. Provides utilities for level parsing and structured log formatting, with first-class support for Google Cloud Logging.
+Common Go logging helpers built on top of the standard library's `log/slog` package with support for Google Cloud Logging.
 
 ## Installation
 
